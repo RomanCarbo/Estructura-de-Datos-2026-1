@@ -1,0 +1,30 @@
+# --- Variables ---
+CC = gcc
+# Flags de compilación: muestra todos los warnings, modo estricto C99 y agrega info para debugear (-g)
+CFLAGS = -Wall -Werror -pedantic -std=c99 -g
+
+# --- Archivos ---
+# Detecta automáticamente todos los .c en la carpeta (ej: main.c, Lista.c, alumnos.c)
+SRCS = $(wildcard *.c)
+# Convierte la lista de .c en una lista de .o
+OBJS = $(SRCS:.c=.o)
+
+# Nombre de tu programa final
+TARGET = practica1
+
+# --- Reglas ---
+# Regla principal
+all: $(TARGET)
+
+# Une los archivos .o para crear el ejecutable
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
+	@echo "¡Compilacion de la Practica 1 Exitosa!"
+
+# Compila cada .c en su respectivo .o
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Limpia los archivos generados para empezar de cero
+clean:
+	rm -f *.o $(TARGET)
